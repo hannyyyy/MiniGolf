@@ -4,38 +4,41 @@ using UnityEngine;
 
 public class arrow : MonoBehaviour
 {
-    [SerializeField] private float shotPower;
-    [SerializeField] private float stopVelocity = 0.05f;
+   // [SerializeField] private float shotPower;
+    //[SerializeField] private float stopVelocity = 0.05f;
     [SerializeField] private LineRenderer lineRenderer;
     private bool isIdle;
     private bool isAiming;
     private Rigidbody body;
 
-    private void Awake()
+  /*  private void Awake()
     {
         body = GetComponent<Rigidbody>();
 
         isAiming = false;
         lineRenderer.enabled = false;
-    }
+    }*/
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if(body.velocity.magnitude < stopVelocity)
+        Vector3? worldPoint = CastMouseClickRay();
+
+        if (!worldPoint.HasValue)
         {
-            Stop(); 
+            return;
         }
-        ProcessAim();
+
+        //if(body.velocity.magnitude < stopVelocity)
+        // {
+        //     Stop(); 
+        //  }
+        // ProcessAim();
     }
-    private void OnMouseDown()
-    {
-        if (isIdle)
-        {
-            isAiming = true;
-        }
-    }
-    private void ProcessAim()
+
+
+    /*
+     * private void ProcessAim()
     {
         if(!isAiming || !isIdle )
         {
@@ -47,37 +50,47 @@ public class arrow : MonoBehaviour
         {
             return;
         }
+
         DrawLine(worldPoint.Value);
 
-        if(Input.GetMouseButtonDown(0))
-        {
-            Shoot(worldPoint.Value);
-        }
+        //if(Input.GetMouseButtonDown(0))
+        // {
+        // Shoot(worldPoint.Value);
+        // }
     }
+     private void OnMouseDown()
+     {
+         if (isIdle)
+         {
+             isAiming = true;
+         }
+     }
     private void Shoot(Vector3 worldPoint)
-    {
-        isAiming = false;
-        lineRenderer.enabled = false;
+     {
+         isAiming = false;
+         lineRenderer.enabled = false;
 
-        Vector3 horizontalWorldPoint = new Vector3(worldPoint.x, transform.position.y, worldPoint.z);
+         Vector3 horizontalWorldPoint = new Vector3(worldPoint.x, transform.position.y, worldPoint.z);
 
-        Vector3 direction = (horizontalWorldPoint - transform.position).normalized;
-        float strength = Vector3.Distance(transform.position, horizontalWorldPoint);
+         Vector3 direction = (horizontalWorldPoint - transform.position).normalized;
+         float strength = Vector3.Distance(transform.position, horizontalWorldPoint);
 
-        body.AddForce(direction * strength * shotPower);
-    }
+         body.AddForce(direction * strength * shotPower);
+     }
+
+     private void Stop()
+     {
+         body.velocity = Vector3.zero;
+         body.angularVelocity = Vector3.zero;
+         isIdle = false;
+     }*/
     private void DrawLine(Vector3 worldPoint)
     {
         Vector3[] positions = { transform.position, worldPoint };
         lineRenderer.SetPositions(positions);
         lineRenderer.enabled = true;
     }
-    private void Stop()
-    {
-        body.velocity = Vector3.zero;
-        body.angularVelocity = Vector3.zero;
-        isIdle = false;
-    }
+    
 
     private Vector3? CastMouseClickRay()
     {
