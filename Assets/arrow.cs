@@ -1,117 +1,76 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class arrow : MonoBehaviour
 {
-   // [SerializeField] private float shotPower;
-    //[SerializeField] private float stopVelocity = 0.05f;
-    [SerializeField] private LineRenderer lineRenderer;
-    private bool isIdle;
-    private bool isAiming;
-    private Rigidbody body;
+    /*public float arrowheadSize;
+    Vector3 startPosition, mouseWorld;
+    GameObject arrow;
+    LineRenderer arrowLine;
 
-  /*  private void Awake()
+    void Start()
     {
-        body = GetComponent<Rigidbody>();
 
-        isAiming = false;
-        lineRenderer.enabled = false;
-    }*/
-
-    // Update is called once per frame
-    private void Update()
-    {
-        Vector3? worldPoint = CastMouseClickRay();
-
-        if (!worldPoint.HasValue)
-        {
-            return;
-        }
-
-        //if(body.velocity.magnitude < stopVelocity)
-        // {
-        //     Stop(); 
-        //  }
-        // ProcessAim();
+        arrow = GameObject.FindGameObjectWithTag(“Arrow”);
+        arrowLine = arrow.GetComponentInChildren<LineRenderer>();
+        mouseWorld = new Vector3();
+        arrowheadSize = 0.02f;
     }
 
-
-    /*
-     * private void ProcessAim()
+    void OnMouseDown()
     {
-        if(!isAiming || !isIdle )
-        {
-            return;
-        }
-        Vector3? worldPoint = CastMouseClickRay();
 
-        if(!worldPoint.HasValue)
-        {
-            return;
-        }
+        mouseWorld = Camera.main.ScreenToWorldPoint(
 
-        DrawLine(worldPoint.Value);
+        new Vector3(Input.mousePosition.x,
+        Input.mousePosition.y,
+        Camera.main.nearClipPlane
+        ));
+        startPosition = mouseWorld;
 
-        //if(Input.GetMouseButtonDown(0))
-        // {
-        // Shoot(worldPoint.Value);
-        // }
     }
-     private void OnMouseDown()
-     {
-         if (isIdle)
-         {
-             isAiming = true;
-         }
-     }
-    private void Shoot(Vector3 worldPoint)
-     {
-         isAiming = false;
-         lineRenderer.enabled = false;
 
-         Vector3 horizontalWorldPoint = new Vector3(worldPoint.x, transform.position.y, worldPoint.z);
-
-         Vector3 direction = (horizontalWorldPoint - transform.position).normalized;
-         float strength = Vector3.Distance(transform.position, horizontalWorldPoint);
-
-         body.AddForce(direction * strength * shotPower);
-     }
-
-     private void Stop()
-     {
-         body.velocity = Vector3.zero;
-         body.angularVelocity = Vector3.zero;
-         isIdle = false;
-     }*/
-    private void DrawLine(Vector3 worldPoint)
+    void OnMouseDrag()
     {
-        Vector3[] positions = { transform.position, worldPoint };
-        lineRenderer.SetPositions(positions);
-        lineRenderer.enabled = true;
+
+        //Turn on the arrow
+        arrowLine.enabled = true;
+        DrawArrow();
     }
-    
 
-    private Vector3? CastMouseClickRay()
+    void DrawArrow()
     {
-        Vector3 screenMousePosFar = new Vector3(
-            Input.mousePosition.x,
-            Input.mousePosition.y,
-            Camera.main.farClipPlane);
-        Vector3 screenMousePosNear = new Vector3(
-            Input.mousePosition.x,
-            Input.mousePosition.y,
-            Camera.main.nearClipPlane);
-        Vector3 worldMousePosFar = Camera.main.ScreenToWorldPoint(screenMousePosFar);
-        Vector3 worldMousePosNear = Camera.main.ScreenToWorldPoint(screenMousePosNear);
+
+        mouseWorld = Camera.main.ScreenToWorldPoint(
+
+        new Vector3(Input.mousePosition.x,
+        Input.mousePosition.y,
+        Camera.main.nearClipPlane
+        ));
+        //The longer the line gets, the smaller relative to the entire line the arrowhead should be
+        float percentSize = (float)(arrowheadSize / Vector3.Distance(startPosition, mouseWorld));
+        //h/t ShawnFeatherly (http://answers.unity.com/answers/1330338/view.html)
+        arrowLine.SetPosition(0, startPosition);
+        arrowLine.SetPosition(1, Vector3.Lerp(startPosition, mouseWorld, 0.999f – percentSize));
+        arrowLine.SetPosition(2, Vector3.Lerp(startPosition, mouseWorld, 1 – percentSize));
+        arrowLine.SetPosition(3, mouseWorld);
+        arrowLine.widthCurve = new AnimationCurve(
+
+        new Keyframe(0, 0.4f),
+        new Keyframe(0.999f – percentSize, 0.4f),
+        new Keyframe(1 – percentSize, 1f),
+        new Keyframe(1 – percentSize, 1f),
+        new Keyframe(1, 0f));
+    }
+
+    void OnMouseUp()
+    {
+
+        //Turn off the arrow
+        arrowLine.enabled = false;
         RaycastHit hit;
-        if(Physics.Raycast(worldMousePosNear, worldMousePosFar - worldMousePosNear, out hit, float.PositiveInfinity))
-        {
-            return hit.point;
-        } else
-        {
-            return null;
-        }
-
+        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100);
+        transform.position = new Vector3(hit.point.x, transform.position.y, hit.point.z);
     }
+    */
 }
