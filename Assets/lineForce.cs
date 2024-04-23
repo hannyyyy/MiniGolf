@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class lineForce : MonoBehaviour
 {
@@ -10,6 +11,11 @@ public class lineForce : MonoBehaviour
     private bool isIdle = true;
     private bool isAiming = true;
     private Rigidbody body;
+    public int clickCount;
+    public Text s;
+    private bool goal = false;
+    public Canvas levelOver;
+
     void Update()
     {
         ProcessAim();
@@ -39,6 +45,12 @@ public class lineForce : MonoBehaviour
 
         if(Input.GetMouseButtonDown(0))
         {
+            if (!goal)
+            {
+                clickCount++;
+                s.text = clickCount.ToString();
+            }
+            
             Shoot(worldPoint.Value);
         }
     }
@@ -89,5 +101,15 @@ public class lineForce : MonoBehaviour
             return null;
         }
 
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Goal")
+        {
+            Debug.Log("Goal");
+            goal = true;
+            levelOver.gameObject.SetActive(true);
+            //make level over popup
+        }
     }
 }
