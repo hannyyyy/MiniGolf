@@ -7,7 +7,7 @@ public class levelSelectScript : MonoBehaviour
     // Start is called before the first frame update
     public void OpenLevel(int levelId)
     {
-        string levelName = "Level " + (levelId + 1);
+        string levelName = "Level " + levelId;
         SceneManager.LoadScene(levelName);
     }
 }
