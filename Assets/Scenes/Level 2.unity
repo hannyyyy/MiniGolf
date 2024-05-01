@@ -1324,6 +1324,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 7991995853070100931, guid: dfa75336a860c7a41ab1c91b155fac73, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7991995853070100931, guid: dfa75336a860c7a41ab1c91b155fac73, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7991995853070100931, guid: dfa75336a860c7a41ab1c91b155fac73, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -1378,9 +1386,9 @@ SceneRoots:
   m_Roots:
   - {fileID: 568818579}
   - {fileID: 1532701601}
+  - {fileID: 6807563896132888020}
   - {fileID: 1040542282}
   - {fileID: 807397341}
-  - {fileID: 6807563896132888020}
   - {fileID: 1472467785}
   - {fileID: 1919788292}
   - {fileID: 1747765003}
