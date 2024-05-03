@@ -16,7 +16,15 @@ public class lineForce : MonoBehaviour
     public Text s;
     private bool goal = false;
     public Canvas levelOver;
+    public GameObject ball;
 
+    public void restart()
+    {
+        Stop();
+        isAiming = false;
+        lineRenderer.enabled = false;
+        ball.transform.position = new Vector3(0, 0.3f, -0.5f);
+    }
     void FixedUpdate()
     {
         if (body.velocity.magnitude < stopVelocity)
