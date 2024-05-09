@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -55,7 +56,6 @@ public class lineForce : MonoBehaviour
                 clickCount++;
                // s.text = clickCount.ToString();
             }
-
             Shoot(worldPoint.Value);
         }
     }
@@ -75,6 +75,10 @@ public class lineForce : MonoBehaviour
 
         Vector3 direction = (horizontalWorldPoint - transform.position).normalized;
         float strength = Vector3.Distance(transform.position, horizontalWorldPoint);
+        if (strength > 5.0f) 
+        {
+            strength = 5f;
+        }
 
         body.AddForce(direction * strength * shotPower);
         isIdle = true;
