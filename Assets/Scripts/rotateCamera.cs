@@ -18,5 +18,14 @@ public class rotateCamera : MonoBehaviour
         {
             transform.eulerAngles += Speed * new Vector3(x: -Input.GetAxis("Mouse Y"), y: Input.GetAxis("Mouse X"), z: 0);
         }
+        if (Input.GetKey(KeyCode.A))
+        {
+            SetTransformX((transform.position.x) + 5f);
+        }
+
+    }
+    void SetTransformX(float n)
+    {
+        transform.position = new Vector3(n, transform.position.y, transform.position.z);
     }
 }
