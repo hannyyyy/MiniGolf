@@ -22,7 +22,7 @@ public class levelSelectScript : MonoBehaviour
     }
     public void OpenLevel(int levelId)
     {
-        string levelName = "Level " + (levelId+1);
+        string levelName = "Level " + (levelId);
         SceneManager.LoadScene(levelName);
     }
 }

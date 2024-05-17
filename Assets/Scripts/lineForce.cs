@@ -1,6 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.AnimatedValues;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,7 +17,15 @@ public class lineForce : MonoBehaviour
     public Text s;
     private bool goal = false;
     public Canvas levelOver;
-
+    public GameObject ball;
+    
+    public void restart()
+    {
+        Stop();
+        isAiming = false;
+        lineRenderer.enabled = false;
+        ball.transform.position = new Vector3(0, 0.3f, -0.5f);
+    }
     void FixedUpdate()
     {
         if (body.velocity.magnitude < stopVelocity)
@@ -54,8 +62,9 @@ public class lineForce : MonoBehaviour
             if (!goal)
             {
                 clickCount++;
-               // s.text = clickCount.ToString();
+                s.text = clickCount.ToString();
             }
+
             Shoot(worldPoint.Value);
         }
     }
@@ -75,11 +84,10 @@ public class lineForce : MonoBehaviour
 
         Vector3 direction = (horizontalWorldPoint - transform.position).normalized;
         float strength = Vector3.Distance(transform.position, horizontalWorldPoint);
-        if (strength > 5.0f) 
+        if (strength > 5.0f)
         {
             strength = 5f;
         }
-
         body.AddForce(direction * strength * shotPower);
         isIdle = true;
     }
